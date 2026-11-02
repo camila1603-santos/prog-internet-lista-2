@@ -1,23 +1,28 @@
 {
   // Desliga a lista de sugestões que aparece enquanto você digita
   "editor.quickSuggestions": {
-    "other": false,
-    "comments": false,
-    "strings": false
+    "other": true,
+    "comments": true,
+    "strings": true
   },
-  "editor.suggestOnTriggerCharacters": false,
-  "editor.wordBasedSuggestions": "off",
+  "editor.suggestOnTriggerCharacters": true,
+  "editor.wordBasedSuggestions": "allDocuments",
 
   // Desliga o "texto fantasma" (sugestões em cinza, tipo Copilot)
   "editor.inlineSuggest.enabled": false,
   "github.copilot.enable": { "*": false },
 
+  // Desliga as "próximas edições sugeridas" (repetir no #p2 o que você fez no #p1)
+  "github.copilot.nextEditSuggestions.enabled": false,
+  "editor.inlineSuggest.edits.enabled": false,
+  "chat.disableAIFeatures": true,
+
   // CSS: não sugere valores nem coloca o ";" sozinho
-  "css.completion.triggerPropertyValueCompletion": false,
-  "css.completion.completePropertyWithSemicolon": false,
+  "css.completion.triggerPropertyValueCompletion": true,
+  "css.completion.completePropertyWithSemicolon": true,
 
   // Emmet: não expande abreviações automaticamente
-  "emmet.showExpandedAbbreviation": "never",
+  "emmet.showExpandedAbbreviation": "always",
 
   // HTML: não fecha as tags sozinho
   "html.autoClosingTags": false
