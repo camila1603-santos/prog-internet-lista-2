@@ -1,0 +1,24 @@
+{
+  // Desliga a lista de sugestões que aparece enquanto você digita
+  "editor.quickSuggestions": {
+    "other": false,
+    "comments": false,
+    "strings": false
+  },
+  "editor.suggestOnTriggerCharacters": false,
+  "editor.wordBasedSuggestions": "off",
+
+  // Desliga o "texto fantasma" (sugestões em cinza, tipo Copilot)
+  "editor.inlineSuggest.enabled": false,
+  "github.copilot.enable": { "*": false },
+
+  // CSS: não sugere valores nem coloca o ";" sozinho
+  "css.completion.triggerPropertyValueCompletion": false,
+  "css.completion.completePropertyWithSemicolon": false,
+
+  // Emmet: não expande abreviações automaticamente
+  "emmet.showExpandedAbbreviation": "never",
+
+  // HTML: não fecha as tags sozinho
+  "html.autoClosingTags": false
+}
