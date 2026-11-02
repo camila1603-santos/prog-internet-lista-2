@@ -142,6 +142,98 @@ Ao escrever uma propriedade, pergunte: **"isso muda o elemento ou a posição do
 
 ---
 
+## 7. `position` × `display`
+
+### Qual a diferença?
+
+| | `display` | `position` |
+|---|---|---|
+| Pergunta que responde | "Como este elemento ocupa espaço e como organiza os filhos?" | "Este elemento fica onde o fluxo normal colocar ou eu escolho onde ele fica?" |
+| Quem decide o lugar | O **pai** organiza os filhos (com flex, grid...) | O **próprio elemento** diz onde quer ficar (`top`, `right`, `bottom`, `left`) |
+| Tipo de layout | Organização em grupo: linhas, colunas, distribuição de espaço | Posição exata: cantos, sobreposição, elementos "flutuando" |
+
+Comparação com a estante:
+
+- **`display`** é a estante arrumando os livros.
+- **`position`** é tirar um livro da estante e colocá-lo num lugar exato, por exemplo "em cima da mesa, encostado no canto esquerdo".
+
+### Como eles se relacionam?
+
+São propriedades diferentes, mas uma interfere na outra:
+
+1. **`absolute` e `fixed` tiram o elemento do fluxo.** O pai deixa de organizá-lo. Se o container tem `display: flex`, um filho com `position: absolute` **ignora** o flex, e os outros filhos se arrumam como se ele não existisse.
+2. **`absolute` e `fixed` fazem o elemento se comportar como `block` por fora.** Um `span` (que é `inline`) com `position: absolute` passa a aceitar `width` e `height`.
+3. **`display: none` vence tudo.** O elemento some, não importa o `position` que ele tenha.
+4. **Dá para usar os dois juntos.** O `display` de um elemento continua organizando os filhos **dele**. Uma box com `position: absolute` pode ter `display: flex` para centralizar o texto que está dentro dela.
+
+### Os valores de `position`
+
+| Valor | Sai do fluxo? | Referência para `top`/`left`... | Característica |
+|---|---|---|---|
+| `static` | Não | Nenhuma (`top`, `left` etc. **não funcionam**) | É o **padrão** de todo elemento. Fica onde o fluxo normal colocar. |
+| `relative` | Não | **A posição original** do próprio elemento | O elemento continua ocupando o espaço original. `top: 20px` só o desloca 20px para baixo de onde ele estaria. Muito usado **no pai**, para virar referência dos filhos `absolute`. |
+| `absolute` | **Sim** | O **ancestral posicionado mais próximo** (qualquer `position` diferente de `static`). Se não houver nenhum, usa a página. | Não ocupa espaço: os vizinhos agem como se ele não existisse. Ideal para colocar algo num canto ou no centro de um container. |
+| `fixed` | **Sim** | A **janela do navegador** | Fica parado na tela mesmo quando você rola a página. Usado em menus fixos, botões de "voltar ao topo", banners. |
+| `sticky` | Não (até "grudar") | O **container onde ele está rolando** | Mistura de `relative` e `fixed`: se comporta normalmente até a rolagem chegar no valor de `top`, e aí "gruda" ali. Usado em cabeçalhos de tabela e menus que grudam no topo. |
+
+> ⚠️ `top`, `right`, `bottom` e `left` só funcionam quando o `position` **não é** `static`.
+
+> 💡 Quando elementos posicionados se sobrepõem, `z-index` define quem fica na frente (o número maior fica por cima).
+
+### A dupla mais usada: pai `relative` + filho `absolute`
+
+```css
+.container {
+    position: relative;   /* vira a referência, mas continua no lugar dele */
+}
+
+.box {
+    position: absolute;   /* se posiciona em relação ao .container */
+    top: 0px;
+    right: 0px;           /* canto de cima à direita DO CONTAINER */
+}
+```
+
+Sem o `position: relative` no pai, o `absolute` procura um ancestral posicionado, não encontra e usa a **página inteira** como referência.
+
+### Exemplo: atividade 6c
+
+Quatro boxes nos cantos de um quadrado e uma no centro:
+
+```css
+.container {
+    width: 600px;
+    height: 600px;
+    position: relative;
+}
+
+.box {
+    width: 150px;
+    height: 150px;
+}
+
+#box1 { position: absolute; top: 0px;    left: 0px;  }   /* canto superior esquerdo */
+#box2 { position: absolute; top: 0px;    right: 0px; }   /* canto superior direito */
+#box3 { position: absolute; bottom: 0px; right: 0px; }   /* canto inferior direito */
+#box4 { position: absolute; bottom: 0px; left: 0px;  }   /* canto inferior esquerdo */
+#box5 { position: absolute; top: 225px;  left: 225px; }  /* centro */
+```
+
+Conta para centralizar a box5:
+
+```
+(tamanho do container − tamanho da box) ÷ 2
+(600 − 150) ÷ 2 = 225px
+```
+
+### Quando usar cada um?
+
+- Vários elementos **em linha, coluna ou grade**, com o espaço distribuído entre eles → **`display`** (flex ou grid).
+- Um elemento num **lugar exato** (canto, centro, por cima de outro) → **`position`**.
+- Elemento que **acompanha a rolagem** → `fixed` ou `sticky`.
+
+---
+
 ## 📌 Para guardar
 
 - Na prática, **90% do tempo** você vai usar `block`, `inline`, `inline-block`, `none`, `flex` e `grid`. Os outros você consulta quando precisar.
@@ -149,3 +241,6 @@ Ao escrever uma propriedade, pergunte: **"isso muda o elemento ou a posição do
 - `justify-content` e `align-items` **dependem** de `display: flex` ou `grid`.
 - **Tipo 1** (`width`, `height`, `background-color`...) muda o próprio elemento. **Tipo 2** (`justify-content`, `align-items`, `gap`...) vai no pai e organiza os filhos.
 - Um elemento pode ser pai e filho ao mesmo tempo, então pode ter os dois tipos de propriedade.
+- **`display`**: o pai organiza os filhos. **`position`**: o elemento escolhe onde fica.
+- `absolute` e `fixed` **tiram o elemento do fluxo**, e o `display: flex` do pai deixa de afetá-lo.
+- `absolute` usa como referência o ancestral posicionado mais próximo. Por isso o pai costuma levar `position: relative`.
