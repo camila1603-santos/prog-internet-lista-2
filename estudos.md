@@ -86,15 +86,47 @@ Exemplo: `background-color: blue` no `#box1` deixa só o box1 azul.
 
 Você escreve no **pai**, mas o efeito aparece na **posição dos filhos**:
 
-| Propriedade | O que faz |
-|---|---|
-| `display: flex` | liga o "modo organizador" |
-| `justify-content` | controla a posição dos filhos na horizontal |
-| `align-items` | controla a posição dos filhos na vertical |
-| `flex-direction` | define se os filhos ficam em linha ou em coluna |
-| `gap` | define o espaço entre os filhos |
+| Propriedade | O que faz | Funciona com |
+|---|---|---|
+| `display: flex` | liga o "modo organizador" | — |
+| `justify-content` | controla a posição dos filhos na horizontal | flex e grid |
+| `align-items` | controla a posição dos filhos na vertical | flex e grid |
+| `flex-direction` | define se os filhos ficam em linha ou em coluna | só flex |
+| `gap` | define o espaço entre os filhos | flex e grid |
+| `flex-wrap` | deixa os filhos quebrarem para a linha de baixo quando não cabem (`wrap`). O padrão (`nowrap`) espreme todos numa linha só. | só flex |
+| `align-content` | alinha as **linhas** entre si, quando há mais de uma (com `flex-wrap: wrap`) | flex e grid |
 
-> ⚠️ Essas propriedades só funcionam junto com `display: flex`. Sem ele, `justify-content` e `align-items` não fazem nada.
+> ⚠️ Essas propriedades só funcionam junto com `display: flex` (ou `grid`, quando a tabela indica). Sem ele, `justify-content` e `align-items` não fazem nada.
+
+> 💡 "Horizontal" e "vertical" valem para o padrão (`flex-direction: row`). Com `flex-direction: column` eles **trocam**: `justify-content` passa a controlar a vertical e `align-items` a horizontal.
+
+### Tipo 2 (versão filho): propriedades que vão no item flex
+
+Algumas propriedades são escritas no **filho**, mas também só funcionam se o **pai** tiver `display: flex`. Elas servem para um filho "pedir" algo diferente dos outros:
+
+| Propriedade | O que faz | Funciona com |
+|---|---|---|
+| `align-self` | alinha **só esse filho**, ignorando o `align-items` do pai | flex e grid |
+| `flex-grow` | quanto o filho **cresce** para ocupar o espaço que sobra (`0` = não cresce, `1` = cresce) | só flex |
+| `flex-shrink` | quanto o filho **encolhe** quando falta espaço (`0` = não encolhe) | só flex |
+| `flex-basis` | tamanho inicial do filho, antes de crescer ou encolher | só flex |
+| `flex` | atalho para os três acima. `flex: 1` = "divida o espaço igualmente com os irmãos" | só flex |
+| `order` | muda a **ordem na tela** sem mexer no HTML (o menor número vem primeiro) | flex e grid |
+
+Exemplo: no chat da atividade 7, para jogar só o nome "Eu" para a direita, sem mexer nos outros:
+
+```css
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.eu {
+    align-self: flex-end;   /* só esse filho vai para o fim (direita, porque é coluna) */
+}
+```
+
+> ⚠️ Se o pai **não** tiver `display: flex`, essas propriedades no filho são ignoradas. É o inverso do `float`, que é ignorado justamente quando o pai **é** flex (ver seção 8).
 
 ### Comparação: a estante e os livros
 
@@ -234,6 +266,94 @@ Conta para centralizar a box5:
 
 ---
 
+## 8. `float` e `clear`
+
+### O que o `float` faz
+
+O `float` empurra o elemento para um dos lados (esquerda ou direita) e deixa **o conteúdo seguinte contornar ele**, como uma foto no meio de uma matéria de jornal com o texto em volta.
+
+| Valor | O que significa |
+|---|---|
+| `left` / `inline-start` | Flutua para a esquerda (início da linha) |
+| `right` / `inline-end` | Flutua para a direita (fim da linha) |
+| `none` | Padrão: não flutua |
+
+> 💡 `inline-start` e `inline-end` são as versões "modernas" de `left` e `right`. Em português (texto da esquerda para a direita), dá no mesmo.
+
+O elemento com `float` sai **parcialmente** do fluxo:
+
+- os elementos `block` que vêm depois **sobem** e ocupam o lugar dele, como se ele não existisse;
+- mas o **texto** desses elementos desvia do float e fica ao lado dele.
+
+Por isso, quando o `float` está funcionando, o próximo elemento aparece **do lado** do flutuado, e não embaixo.
+
+### O que o `clear` faz
+
+O `clear` vai no elemento que vem **depois** do float e diz: **"não fique ao lado de nenhum float, comece abaixo dele"**.
+
+| Valor | O que significa |
+|---|---|
+| `left` | Desce abaixo dos floats da esquerda |
+| `right` | Desce abaixo dos floats da direita |
+| `both` | Desce abaixo de qualquer float, dos dois lados (o mais usado) |
+| `none` | Padrão: pode ficar ao lado dos floats |
+
+Comparação com o jornal: o `float` é a foto encostada no canto, e o `clear: both` é um parágrafo que diz "eu só começo depois que a foto acabar".
+
+### Cuidado 1: `float` não funciona em filho de flex
+
+Se o pai tem `display: flex` (ou `grid`), o `float` dos filhos **é ignorado**. A sintaxe está certa, mas não tem efeito nenhum.
+
+A solução é colocar o elemento dentro de uma `div` comum. Essa `div` passa a ser o filho do flex, e o elemento flutuado fica dentro dela, onde o `float` volta a funcionar.
+
+### Cuidado 2: o pai "não enxerga" o float
+
+Se uma `div` só tem filhos com `float`, a altura dela fica **zero**, porque o float não conta para o tamanho do pai. Formas de resolver:
+
+- colocar depois do float um elemento com `clear: both` (que é o caso da atividade 7);
+- ou usar `display: flow-root` no pai (ver seção 4).
+
+### Exemplo: atividade 7 (chat)
+
+```html
+<div class="container">          <!-- display: flex -->
+    <div class="msg">            <!-- filho do flex, div comum -->
+        <span class="nome">Pedro Silva</span>
+        <div class="box" id="box1">Olá, tudo bem?</div>
+    </div>
+    ...
+</div>
+```
+
+```css
+.container {
+    display: flex;              /* organiza as .msg em coluna */
+    flex-direction: column;
+}
+
+.nome {
+    float: inline-start;        /* funciona porque o pai é a .msg, não o container */
+}
+
+.box {
+    clear: both;                /* o balão começa ABAIXO do nome, e não ao lado */
+}
+```
+
+O que acontece em cada caso:
+
+| Situação | Resultado na tela |
+|---|---|
+| `.nome` direto dentro do `.container` (sem a `.msg`) | O `float` é ignorado, porque o pai é flex |
+| Com a `.msg`, mas sem `clear` no `.box` | O nome fica à esquerda e o balão **ao lado** dele |
+| Com a `.msg` e `clear: both` no `.box` | O nome fica em cima e o balão **embaixo** ✅ |
+
+### Quando usar `float` hoje?
+
+Hoje o `float` é usado principalmente para **texto contornando uma imagem**. Para montar layout (colunas, alinhar à esquerda ou à direita), o `flex` e o `grid` resolvem melhor. Mesmo assim, vale entender o `float`, porque ele aparece em código antigo e em exercícios.
+
+---
+
 ## 📌 Para guardar
 
 - Na prática, **90% do tempo** você vai usar `block`, `inline`, `inline-block`, `none`, `flex` e `grid`. Os outros você consulta quando precisar.
@@ -241,6 +361,10 @@ Conta para centralizar a box5:
 - `justify-content` e `align-items` **dependem** de `display: flex` ou `grid`.
 - **Tipo 1** (`width`, `height`, `background-color`...) muda o próprio elemento. **Tipo 2** (`justify-content`, `align-items`, `gap`...) vai no pai e organiza os filhos.
 - Um elemento pode ser pai e filho ao mesmo tempo, então pode ter os dois tipos de propriedade.
+- `align-self`, `flex-grow`, `flex-shrink`, `flex` e `order` vão no **filho**, mas só funcionam se o **pai** tiver `display: flex`.
+- `flex-direction`, `flex-wrap` e `flex-*` são **só do flex**. `justify-content`, `align-items`, `gap` e `align-self` funcionam também no `grid`.
 - **`display`**: o pai organiza os filhos. **`position`**: o elemento escolhe onde fica.
 - `absolute` e `fixed` **tiram o elemento do fluxo**, e o `display: flex` do pai deixa de afetá-lo.
 - `absolute` usa como referência o ancestral posicionado mais próximo. Por isso o pai costuma levar `position: relative`.
+- `float` empurra o elemento para um lado e faz o conteúdo seguinte ficar **ao lado** dele. `clear: both` faz o elemento seguinte começar **abaixo** do float.
+- `float` **não funciona** em filho direto de `display: flex` ou `grid`. Para usar, coloque o elemento dentro de uma `div` comum.

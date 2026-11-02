@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -44,6 +44,16 @@
             display: flex;
             justify-content: flex-end;
         }
+
+        .input{
+            position: relative;
+        }
+
+        .input button{
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+        }
     </style>
 </head>
 
@@ -66,10 +76,7 @@
             <div class="box" id="box4">Criatura...</div>
         </div>
         <div class="input">
-            <label for="mensagem"></label>
             <input type="text" id="mensagem" placeholder="Digite aqui sua mensagem">
-        </div>
-        <div class="enviar">
             <button>Enviar</button>
         </div>
     </div>
