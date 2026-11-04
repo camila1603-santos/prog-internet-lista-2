@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid</title>
+    <style>
+        .container {
+            display: flex;
+            width: 900px;
+            min-height: 600px;
+            border: 1px solid gray;
+        }
+
+        #box1 {
+            width: 250px;
+            background-color: #3d4450;
+            color: white;
+        }
+
+        #box2 {
+            flex: 1;
+            background-color: white;
+            color: #3d4450;
+        }
+
+        .campo {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: large;
+        }
+
+        .dados {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: small;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box" id="box1">
+            <h3>Pessoal</h3>
+            <hr>
+            <div class="campo">Nome</div>
+            <p class="dados">Joana Barbosa</p>
+            <div class="campo">Endereço</div>
+            <p class="dados">Rua da Paz, 250</p>
+            <p class="dados">7100-011 Lisboa</p>
+            <div class="campo">Número de telefone</div>
+            <p class="dados">9630002121</p>
+            <div class="campo">Email</div>
+            <p class="dados">exemplos@cvmaker.pt</p>
+        </div>
+        <div class="box" id="box2">
+            <h1>Joana Barbosa</h1>
+            <hr>
+            <p>Uma marketer digital com sentido
+                de missão e com mais de três anos
+                de experiência em conduzir
+                iniciativas promocionais.
+                Sou uma especialista em online
+                marketing, lead generation e
+                nurturing. Tenho uma comunicação
+                exemplar, aptidões interpessoais
+                e trabalho bem sobre pressão de
+                orma a atingir os objetivos. </p>
+            <hr>
+
+            <h2>Experiência profissional</h2>
+            <hr>
+            <h3>Junior SEO Marketer</h3>
+            <p>Cyanca, Lisboa</p>
+            <ul>
+                <li>Página on/off SEO</li>
+                <li>Estratégias de linkbuilding</li>
+                <li>Criação de conteúdo relevante</li>
+                <li>Trabalho com ferramentas online: Ahrefs, Google</li>
+
+            </ul>
+
+            <h3>Assistente de Vendas</h3>
+            <p>Salsa, Lisboa</p>
+            <ul>
+                <li>Contribuição para os objetivos de vendas</li>
+                <li>Gestão de inventário</li>
+                <li>Apoio a clientes</li>
+            </ul>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
