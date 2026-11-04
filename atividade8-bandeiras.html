@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bandeiras</title>
+    <style>
+   
+        
+        .bandeira {
+            width: 300px;
+            height: 200px;
+            border: 1px solid #999;
+            position: relative;
+        }
+
+        #japao.bandeira {
+            background-color: #ffffff;
+        }
+
+        #japao.bandeira > div.circulo {
+            width: 120px;
+            height: 120px;
+            background-color: #bc002d;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #alemanha.bandeira > div.faixa {
+            height: 33.33%;
+        }
+
+        #alemanha.bandeira > div.preta {
+            background-color: #000000;
+        }
+
+        #alemanha.bandeira > div.vermelha {
+            background-color: #dd0000;
+        }
+
+        #alemanha.bandeira > div.amarela {
+            background-color: #ffce00;
+        }
+
+        #holanda.bandeira > div.faixa {
+            height: 33.33%;
+        }
+
+        #holanda.bandeira > div.vermelha {
+            background-color: #ae1c28;
+        }
+
+        #holanda.bandeira > div.branca {
+            background-color: #ffffff;
+        }
+
+        #holanda.bandeira > div.azul {
+            background-color: #21468b;
+        }
+
+        #italia.bandeira {
+            display: flex;
+        }
+
+        #italia.bandeira > div.faixa {
+            width: 33.33%;
+            height: 100%;
+        }
+
+        #italia.bandeira > div.verde {
+            background-color: #009246;
+        }
+
+        #italia.bandeira > div.branca {
+            background-color: #ffffff;
+        }
+
+        #italia.bandeira > div.vermelha {
+            background-color: #ce2b37;
+        }
+
+        #brasil.bandeira {
+            background-color: #009c3b;
+        }
+
+        #brasil.bandeira > div.losango {
+            position: absolute;
+            top: 17px;
+            left: 25px;
+            width: 250px;
+            height: 166px;
+            background-color: #ffdf00;
+            clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+        }
+
+        #brasil.bandeira > div.circulo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            background-color: #002776;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            overflow: hidden;
+        }
+
+        #brasil.bandeira > div.circulo > div.faixa {
+            position: absolute;
+            top: 40px;
+            left: -10px;
+            width: 120px;
+            height: 12px;
+            background-color: #ffffff;
+            transform: rotate(10deg);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#japao">Bandeira Japão</a>
+        <a href="#alemanha">Bandeira Alemanha</a>
+        <a href="#holanda">Bandeira Holanda</a>
+        <a href="#italia">Bandeira Itália</a>
+        <a href="#brasil">Bandeira Brasil</a>
+    </nav>
+
+    <h2>Japão</h2>
+    <div class="bandeira" id="japao">
+        <div class="circulo"></div>
+    </div>
+
+    <h2>Alemanha</h2>
+    <div class="bandeira" id="alemanha">
+        <div class="faixa preta"></div>
+        <div class="faixa vermelha"></div>
+        <div class="faixa amarela"></div>
+    </div>
+
+    <h2>Holanda</h2>
+    <div class="bandeira" id="holanda">
+        <div class="faixa vermelha"></div>
+        <div class="faixa branca"></div>
+        <div class="faixa azul"></div>
+    </div>
+
+    <h2>Itália</h2>
+    <div class="bandeira" id="italia">
+        <div class="faixa verde"></div>
+        <div class="faixa branca"></div>
+        <div class="faixa vermelha"></div>
+    </div>
+
+    <h2>Brasil</h2>
+    <div class="bandeira" id="brasil">
+        <div class="losango"></div>
+        <div class="circulo">
+            <div class="faixa"></div>
+        </div>
+    </div>
+</body>
+</html>
