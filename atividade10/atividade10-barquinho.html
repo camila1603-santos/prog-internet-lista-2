@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animate</title>
+    <style>
+
+        .barco{
+            width: 100px;
+            height: 100px;
+            background-image: url("barquinho.jpg");
+            background-size: contain;
+            background-repeat: no-repeat;
+            position: absolute;
+            bottom: 130px;
+            z-index: 2;
+            animation: balanco 2s linear 1s infinite, navegar 10s linear 1s infinite;
+        }
+
+        @keyframes balanco {
+            0%   { transform: rotate(-5deg); }
+            50%  { transform: rotate(5deg); }
+            100% { transform: rotate(-5deg); }
+        }
+
+        @keyframes navegar {
+            0%   { left: -100px; }
+            100% { left: 100%; }
+        }
+
+        body{
+            margin: 0;
+            overflow: hidden;
+            height: 100vh;
+            background-image: linear-gradient(skyblue, white);
+        }
+
+        .mar{
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 150px;
+            background-color: blue;
+            z-index: 1;
+        }
+
+        .mar::before,
+        .mar::after{
+            content: "";
+            position: absolute;
+            top: -20px;
+            width: 50%;
+            height: 40px;
+            background-color: blue;
+            border-radius: 50%;
+            animation: onda 2s infinite alternate;
+        }
+
+        .mar::after{
+            left: 50%;
+        }
+
+        @keyframes onda {
+            from { top: -20px; }
+            to   { top: -10px; }
+        }
+
+        .nuvem{
+            position: absolute;
+            top: 60px;
+            width: 60px;
+            height: 60px;
+            background-color: white;
+            border-radius: 150%;
+            box-shadow: 40px 0 white, 20px -25px white;
+            animation: nuvem 20s linear infinite;
+        }
+
+        @keyframes nuvem {
+            from { left: -120px; }
+            to   { left: 100%; }
+        }
+
+    </style>
+</head>
+<body>
+   <div class="barco"></div>
+   <div class="mar"></div>
+   <div class="nuvem"></div>
+</body>
+</html>
